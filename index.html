@@ -43,6 +43,16 @@
     color: var(--accent);
   }
 
+  h2 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 400;
+    font-size: clamp(0.95rem, 2vw, 1.3rem);
+    letter-spacing: -0.01em;
+    color: var(--accent);
+    opacity: 0.7;
+    margin-top: 6px;
+  }
+
   .subtitle {
     color: var(--muted);
     font-size: 0.78rem;
@@ -235,7 +245,8 @@
 <body>
 
 <header>
-  <h1>QR → SVG<br>Generator for 3D Printing and Engraving</h1>
+  <h1>QR → SVG Generator</h1>
+  <h2>for 3D Printing and Engraving</h2>
   <p class="subtitle">// native vector output · zero raster artifacts</p>
   <p class="subtitle"><a href="https://buymeacoffee.com/mi_ty" style="color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent);">Buy me a coffee!</a></p>
 </header>
@@ -319,22 +330,7 @@ function toggleTransparent() {
   if (currentSVG) generate();
 }
 
-// ─── Boundary polygon tracer ────────────────────────────────────────────────
-//
-// For every dark cell, we emit a directed half-edge along any side that borders
-// a non-dark cell. Edges are oriented so the dark region is always on the RIGHT
-// of the direction of travel:
-//   top border   → travel east
-//   right border → travel south
-//   bottom border→ travel west
-//   left border  → travel north
-//
-// Edges are then chained into closed loops. At "saddle points" (vertices where
-// two separate polygon boundaries share a corner), we always take the most
-// clockwise (rightmost) available outgoing edge to stay on the correct boundary.
-//
 function tracePolygons(isDark, n) {
-  // Build edge adjacency: from-vertex → outgoing edges
   const edgeMap = new Map();
 
   function addEdge(x1, y1, x2, y2) {
@@ -346,16 +342,13 @@ function tracePolygons(isDark, n) {
   for (let r = 0; r < n; r++) {
     for (let c = 0; c < n; c++) {
       if (!isDark(r, c)) continue;
-      if (!(r > 0   && isDark(r-1, c))) addEdge(c,   r,   c+1, r  ); // top    → east
-      if (!(c < n-1 && isDark(r, c+1))) addEdge(c+1, r,   c+1, r+1); // right  → south
-      if (!(r < n-1 && isDark(r+1, c))) addEdge(c+1, r+1, c,   r+1); // bottom → west
-      if (!(c > 0   && isDark(r, c-1))) addEdge(c,   r+1, c,   r  ); // left   → north
+      if (!(r > 0   && isDark(r-1, c))) addEdge(c,   r,   c+1, r  );
+      if (!(c < n-1 && isDark(r, c+1))) addEdge(c+1, r,   c+1, r+1);
+      if (!(r < n-1 && isDark(r+1, c))) addEdge(c+1, r+1, c,   r+1);
+      if (!(c > 0   && isDark(r, c-1))) addEdge(c,   r+1, c,   r  );
     }
   }
 
-  // At a vertex with multiple unused outgoing edges (saddle point), pick the
-  // most clockwise continuation relative to the incoming direction.
-  // In y-down screen coords, "most clockwise" = maximum atan2 signed angle.
   function nextEdge(cx, cy, prevX, prevY, usedKeys) {
     const opts = (edgeMap.get(`${cx},${cy}`) || []).filter(e => !usedKeys.has(e.key));
     if (opts.length === 0) return null;
@@ -401,7 +394,6 @@ function tracePolygons(isDark, n) {
   return polygons;
 }
 
-// Remove collinear intermediate vertices — only keep actual corner points.
 function simplify(pts) {
   const n = pts.length;
   return pts.filter((b, i) => {
@@ -410,11 +402,9 @@ function simplify(pts) {
   });
 }
 
-// Convert point list to SVG path 'd' string, applying quiet-zone offset.
 function toPathD(pts, offset) {
   return pts.map((p, i) => `${i === 0 ? 'M' : 'L'}${p.x + offset} ${p.y + offset}`).join(' ') + ' Z';
 }
-// ─────────────────────────────────────────────────────────────────────────────
 
 function generate() {
   clearError();
@@ -442,8 +432,6 @@ function generate() {
       ? ''
       : `<rect x="0" y="0" width="${total}" height="${total}" fill="${lightColor}"/>`;
 
-    // Use evenodd fill rule so that inner boundaries (holes inside finder
-    // pattern rings etc.) are correctly rendered as transparent cutouts.
     currentSVG =
 `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
@@ -456,7 +444,6 @@ function generate() {
 
     document.getElementById('svg-preview').innerHTML = currentSVG;
 
-    const moduleCount = n * n;
     const darkCount = Array.from({length: n}, (_, r) =>
       Array.from({length: n}, (_, c) => qr.isDark(r, c) ? 1 : 0)
         .reduce((a,b) => a+b, 0)).reduce((a,b) => a+b, 0);
