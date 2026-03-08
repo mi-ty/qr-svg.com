@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D Print QR Generator</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Syne:wght@400;700;800&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0e0e10;
+    --surface: #18181c;
+    --border: #2a2a32;
+    --accent: #d4f500;
+    --accent2: #7efff5;
+    --text: #e8e8f0;
+    --muted: #666680;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 48px 24px;
+    gap: 32px;
+  }
+
+  header { text-align: center; }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    color: var(--accent);
+  }
+
+  .subtitle {
+    color: var(--muted);
+    font-size: 0.78rem;
+    margin-top: 8px;
+    letter-spacing: 0.05em;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    width: 100%;
+    max-width: 520px;
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  label {
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    color: var(--accent2);
+    text-transform: uppercase;
+  }
+
+  input, select {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.9rem;
+    padding: 10px 14px;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+  }
+
+  input:focus, select:focus { border-color: var(--accent); }
+
+  .row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .checkbox-field {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .checkbox-field input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    accent-color: var(--accent);
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .checkbox-field label { cursor: pointer; margin: 0; }
+
+  .generate-btn {
+    width: 100%;
+    padding: 13px;
+    background: var(--accent);
+    border: none;
+    border-radius: 6px;
+    color: #0e0e10;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.1s;
+    margin-top: 8px;
+  }
+
+  .generate-btn:hover { opacity: 0.9; }
+  .generate-btn:active { transform: scale(0.98); }
+
+  .error-msg {
+    display: none;
+    background: #2a1010;
+    border: 1px solid #5a2020;
+    border-radius: 6px;
+    color: #ff8080;
+    font-size: 0.78rem;
+    padding: 10px 14px;
+    margin-top: 12px;
+  }
+
+  .preview-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    width: 100%;
+    max-width: 520px;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .preview-card.visible { display: flex; }
+
+  .preview-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    text-transform: uppercase;
+    align-self: flex-start;
+  }
+
+  #svg-preview {
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #fff;
+    background-image:
+      linear-gradient(45deg, #ccc 25%, transparent 25%),
+      linear-gradient(-45deg, #ccc 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, #ccc 75%),
+      linear-gradient(-45deg, transparent 75%, #ccc 75%);
+    background-size: 16px 16px;
+    background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    width: 100%;
+  }
+
+  #svg-preview svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-width: 320px;
+  }
+
+  .action-row {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .dl-btn {
+    flex: 1;
+    padding: 11px;
+    border-radius: 6px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    text-align: center;
+  }
+
+  .dl-btn:hover { opacity: 0.8; }
+  .dl-primary  { background: var(--accent); color: #0e0e10; border: none; }
+  .dl-secondary { background: transparent; color: var(--accent2); border: 1px solid var(--accent2); }
+
+  .info-pill {
+    font-size: 0.7rem;
+    color: var(--muted);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 4px 12px;
+  }
+
+  .note {
+    font-size: 0.72rem;
+    color: var(--muted);
+    text-align: center;
+    max-width: 440px;
+    line-height: 1.6;
+  }
+  .note span { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>QR → SVG<br>for 3D Print</h1>
+  <p class="subtitle">// native vector output · zero raster artifacts</p>
+</header>
+
+<div class="card">
+  <div class="field">
+    <label>Content / URL</label>
+    <input type="text" id="qr-text" placeholder="https://example.com or any text" value="https://example.com">
+  </div>
+
+  <div class="row">
+    <div class="field">
+      <label>Error Correction</label>
+      <select id="ec-level">
+        <option value="L">L — 7%  (smaller)</option>
+        <option value="M" selected>M — 15% (balanced)</option>
+        <option value="Q">Q — 25%</option>
+        <option value="H">H — 30% (most robust)</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Quiet Zone (modules)</label>
+      <input type="number" id="quiet-zone" value="4" min="0" max="10">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="field">
+      <label>Module Color</label>
+      <input type="color" id="color-dark" value="#000000" style="height:42px;padding:4px 8px;cursor:pointer;">
+    </div>
+    <div class="field" id="bg-color-field">
+      <label>Background Color</label>
+      <input type="color" id="color-light" value="#ffffff" style="height:42px;padding:4px 8px;cursor:pointer;">
+    </div>
+  </div>
+
+  <div class="checkbox-field">
+    <input type="checkbox" id="transparent-bg" onchange="toggleTransparent()">
+    <label for="transparent-bg">Transparent Background</label>
+  </div>
+
+  <button class="generate-btn" onclick="generate()">GENERATE SVG</button>
+  <div class="error-msg" id="error-msg"></div>
+</div>
+
+<div class="preview-card" id="preview-card">
+  <span class="preview-label">Preview</span>
+  <div id="svg-preview"></div>
+  <div class="action-row">
+    <button class="dl-btn dl-primary" onclick="downloadSVG()">↓ Download SVG</button>
+    <button class="dl-btn dl-secondary" onclick="copySVG()">Copy SVG Code</button>
+  </div>
+  <span class="info-pill" id="size-info"></span>
+</div>
+
+<p class="note">
+  All connected dark regions — including partial row overlaps — are traced as single
+  <span>&lt;path&gt;</span> polygons with no internal seams. Clean geometry for extrusion in any slicer or CAD tool.
+</p>
+
+<script>
+let currentSVG = '';
+
+function showError(msg) {
+  const el = document.getElementById('error-msg');
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+function clearError() {
+  document.getElementById('error-msg').style.display = 'none';
+}
+
+function toggleTransparent() {
+  const t = document.getElementById('transparent-bg').checked;
+  const f = document.getElementById('bg-color-field');
+  f.style.opacity = t ? '0.35' : '1';
+  f.style.pointerEvents = t ? 'none' : '';
+  if (currentSVG) generate();
+}
+
+// ─── Boundary polygon tracer ────────────────────────────────────────────────
+//
+// For every dark cell, we emit a directed half-edge along any side that borders
+// a non-dark cell. Edges are oriented so the dark region is always on the RIGHT
+// of the direction of travel:
+//   top border   → travel east
+//   right border → travel south
+//   bottom border→ travel west
+//   left border  → travel north
+//
+// Edges are then chained into closed loops. At "saddle points" (vertices where
+// two separate polygon boundaries share a corner), we always take the most
+// clockwise (rightmost) available outgoing edge to stay on the correct boundary.
+//
+function tracePolygons(isDark, n) {
+  // Build edge adjacency: from-vertex → outgoing edges
+  const edgeMap = new Map();
+
+  function addEdge(x1, y1, x2, y2) {
+    const k = `${x1},${y1}`;
+    if (!edgeMap.has(k)) edgeMap.set(k, []);
+    edgeMap.get(k).push({ x: x2, y: y2, key: `${x1},${y1},${x2},${y2}` });
+  }
+
+  for (let r = 0; r < n; r++) {
+    for (let c = 0; c < n; c++) {
+      if (!isDark(r, c)) continue;
+      if (!(r > 0   && isDark(r-1, c))) addEdge(c,   r,   c+1, r  ); // top    → east
+      if (!(c < n-1 && isDark(r, c+1))) addEdge(c+1, r,   c+1, r+1); // right  → south
+      if (!(r < n-1 && isDark(r+1, c))) addEdge(c+1, r+1, c,   r+1); // bottom → west
+      if (!(c > 0   && isDark(r, c-1))) addEdge(c,   r+1, c,   r  ); // left   → north
+    }
+  }
+
+  // At a vertex with multiple unused outgoing edges (saddle point), pick the
+  // most clockwise continuation relative to the incoming direction.
+  // In y-down screen coords, "most clockwise" = maximum atan2 signed angle.
+  function nextEdge(cx, cy, prevX, prevY, usedKeys) {
+    const opts = (edgeMap.get(`${cx},${cy}`) || []).filter(e => !usedKeys.has(e.key));
+    if (opts.length === 0) return null;
+    if (opts.length === 1) return opts[0];
+    const idx = cx - prevX, idy = cy - prevY;
+    return opts.reduce((best, opt) => {
+      const odx = opt.x  - cx, ody = opt.y  - cy;
+      const bdx = best.x - cx, bdy = best.y - cy;
+      const aOpt  = Math.atan2(idx * ody - idy * odx, idx * odx + idy * ody);
+      const aBest = Math.atan2(idx * bdy - idy * bdx, idx * bdx + idy * bdy);
+      return aOpt > aBest ? opt : best;
+    });
+  }
+
+  const usedKeys = new Set();
+  const polygons = [];
+
+  for (const [startKey, edges] of edgeMap) {
+    for (const startEdge of edges) {
+      if (usedKeys.has(startEdge.key)) continue;
+
+      const [sx, sy] = startKey.split(',').map(Number);
+      usedKeys.add(startEdge.key);
+
+      const pts = [{ x: sx, y: sy }];
+      let prevX = sx, prevY = sy;
+      let cx = startEdge.x, cy = startEdge.y;
+
+      for (let guard = 0; guard < 100000; guard++) {
+        if (cx === sx && cy === sy) break;
+        pts.push({ x: cx, y: cy });
+        const next = nextEdge(cx, cy, prevX, prevY, usedKeys);
+        if (!next) break;
+        usedKeys.add(next.key);
+        prevX = cx; prevY = cy;
+        cx = next.x; cy = next.y;
+      }
+
+      if (pts.length >= 4) polygons.push(pts);
+    }
+  }
+
+  return polygons;
+}
+
+// Remove collinear intermediate vertices — only keep actual corner points.
+function simplify(pts) {
+  const n = pts.length;
+  return pts.filter((b, i) => {
+    const a = pts[(i - 1 + n) % n], c = pts[(i + 1) % n];
+    return (b.x - a.x) * (c.y - b.y) !== (b.y - a.y) * (c.x - b.x);
+  });
+}
+
+// Convert point list to SVG path 'd' string, applying quiet-zone offset.
+function toPathD(pts, offset) {
+  return pts.map((p, i) => `${i === 0 ? 'M' : 'L'}${p.x + offset} ${p.y + offset}`).join(' ') + ' Z';
+}
+// ─────────────────────────────────────────────────────────────────────────────
+
+function generate() {
+  clearError();
+  const text = document.getElementById('qr-text').value.trim();
+  if (!text) { showError('Please enter some content.'); return; }
+
+  const ecLevel       = document.getElementById('ec-level').value;
+  const quiet         = Math.max(0, parseInt(document.getElementById('quiet-zone').value) || 0);
+  const darkColor     = document.getElementById('color-dark').value;
+  const lightColor    = document.getElementById('color-light').value;
+  const transparentBg = document.getElementById('transparent-bg').checked;
+
+  try {
+    const qr = qrcode(0, ecLevel);
+    qr.addData(text);
+    qr.make();
+
+    const n = qr.getModuleCount();
+    const total = n + quiet * 2;
+
+    const polygons = tracePolygons((r, c) => qr.isDark(r, c), n);
+    const paths = polygons.map(pts => toPathD(simplify(pts), quiet));
+
+    const bgRect = transparentBg
+      ? ''
+      : `<rect x="0" y="0" width="${total}" height="${total}" fill="${lightColor}"/>`;
+
+    // Use evenodd fill rule so that inner boundaries (holes inside finder
+    // pattern rings etc.) are correctly rendered as transparent cutouts.
+    currentSVG =
+`<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+     viewBox="0 0 ${total} ${total}"
+     shape-rendering="crispEdges">
+  ${bgRect}
+  <path fill="${darkColor}" fill-rule="evenodd"
+    d="${paths.join(' ')}"/>
+</svg>`;
+
+    document.getElementById('svg-preview').innerHTML = currentSVG;
+
+    const moduleCount = n * n;
+    const darkCount = Array.from({length: n}, (_, r) =>
+      Array.from({length: n}, (_, c) => qr.isDark(r, c) ? 1 : 0)
+        .reduce((a,b) => a+b, 0)).reduce((a,b) => a+b, 0);
+
+    document.getElementById('size-info').textContent =
+      `${n}×${n} modules · ${polygons.length} polygons · ${darkCount} dark cells · ${(currentSVG.length / 1024).toFixed(1)} KB`;
+
+    const card = document.getElementById('preview-card');
+    card.classList.add('visible');
+    card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+  } catch (e) {
+    showError('Error: ' + e.message);
+    console.error(e);
+  }
+}
+
+function downloadSVG() {
+  if (!currentSVG) return;
+  const blob = new Blob([currentSVG], { type: 'image/svg+xml' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'qrcode-3dprint.svg';
+  a.click();
+}
+
+function copySVG() {
+  if (!currentSVG) return;
+  navigator.clipboard.writeText(currentSVG).then(() => {
+    const btn = document.querySelector('.dl-secondary');
+    btn.textContent = '✓ Copied!';
+    setTimeout(() => btn.textContent = 'Copy SVG Code', 2000);
+  });
+}
+
+document.getElementById('qr-text').addEventListener('keydown', e => {
+  if (e.key === 'Enter') generate();
+});
+
+window.addEventListener('load', generate);
+</script>
+</body>
+</html>
