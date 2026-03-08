@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>3D Print QR Generator</title>
+<title>QR Generator to SVG for 3D Printing</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Syne:wght@400;700;800&display=swap');
@@ -235,8 +235,9 @@
 <body>
 
 <header>
-  <h1>QR → SVG<br>for 3D Print</h1>
+  <h1>QR → SVG<br>Generator for 3D Printing and Engraving</h1>
   <p class="subtitle">// native vector output · zero raster artifacts</p>
+  <p class="subtitle"><a href="https://buymeacoffee.com/mi_ty" style="color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent);">Buy me a coffee!</a></p>
 </header>
 
 <div class="card">
@@ -256,7 +257,7 @@
       </select>
     </div>
     <div class="field">
-      <label>Quiet Zone (modules)</label>
+      <label>Edge Thickness (modules)</label>
       <input type="number" id="quiet-zone" value="4" min="0" max="10">
     </div>
   </div>
@@ -292,6 +293,8 @@
 </div>
 
 <p class="note">
+  A QR Generator with SVG output that retains sharp lines and joins adjacent regions correctly.
+  Fixes problems I have had with every other online generator, hopefully you will find this tool useful.
   All connected dark regions — including partial row overlaps — are traced as single
   <span>&lt;path&gt;</span> polygons with no internal seams. Clean geometry for extrusion in any slicer or CAD tool.
 </p>
