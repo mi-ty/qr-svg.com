@@ -3,7 +3,71 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>QR Generator to SVG for 3D Printing</title>
+
+<!-- ═══════════════════════════════════════════════
+     SEO: Title — keyword-rich, no special chars
+     ═══════════════════════════════════════════════ -->
+<title>QR Code SVG Generator for 3D Printing &amp; Engraving | QR-SVG.com</title>
+
+<!-- ═══════════════════════════════════════════════
+     SEO: Meta description
+     ═══════════════════════════════════════════════ -->
+<meta name="description" content="Generate clean-path SVG QR codes for 3D printing and engraving. Adjacent modules are merged into single paths — no seams, no raster artifacts. Free &amp; instant.">
+
+<!-- ═══════════════════════════════════════════════
+     SEO: Canonical
+     ═══════════════════════════════════════════════ -->
+<link rel="canonical" href="https://qr-svg.com/">
+
+<!-- ═══════════════════════════════════════════════
+     SEO: Open Graph (for Reddit, Discord, social)
+     ═══════════════════════════════════════════════ -->
+<meta property="og:type"        content="website">
+<meta property="og:url"         content="https://qr-svg.com/">
+<meta property="og:title"       content="QR Code SVG Generator for 3D Printing &amp; Engraving | QR-SVG.com">
+<meta property="og:description" content="Generate clean-path SVG QR codes for 3D printing and laser engraving. No seams, no raster artifacts — free and instant.">
+<meta property="og:image"       content="https://qr-svg.com/og-preview.png">
+<meta property="og:image:width"  content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name"   content="QR-SVG.com">
+
+<!-- ═══════════════════════════════════════════════
+     SEO: Twitter / X Card
+     ═══════════════════════════════════════════════ -->
+<meta name="twitter:card"        content="summary_large_image">
+<meta name="twitter:title"       content="QR Code SVG Generator for 3D Printing &amp; Engraving | QR-SVG.com">
+<meta name="twitter:description" content="Clean-path SVG QR codes. Adjacent modules merged into single polygons — no seams, ready for any slicer or CAD tool.">
+<meta name="twitter:image"       content="https://qr-svg.com/og-preview.png">
+
+<!-- ═══════════════════════════════════════════════
+     SEO: Structured Data — WebApplication schema
+     ═══════════════════════════════════════════════ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "QR Code SVG Generator for 3D Printing & Engraving — QR-SVG.com",
+  "url": "https://qr-svg.com/",
+  "description": "Generate clean-path SVG QR codes for 3D printing and laser engraving. Adjacent modules are merged into single polygons with no internal seams — perfect for slicers and CAD tools.",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web",
+  "browserRequirements": "Any modern browser",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "featureList": [
+    "Clean-path SVG output with no module seams",
+    "Transparent background support",
+    "Configurable error correction levels",
+    "Adjustable quiet zone",
+    "Custom module and background colors",
+    "One-click SVG download"
+  ]
+}
+</script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Syne:wght@400;700;800&display=swap');
@@ -32,7 +96,17 @@
     gap: 32px;
   }
 
-  header { text-align: center; }
+  header { text-align: center; width: 100%; max-width: 520px; }
+
+  .site-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
 
   h1 {
     font-family: 'Syne', sans-serif;
@@ -232,22 +306,86 @@
     padding: 4px 12px;
   }
 
-  .note {
-    font-size: 0.72rem;
+  /* ── Expanded about section ── */
+  .about {
+    width: 100%;
+    max-width: 520px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .about-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px 28px;
+  }
+
+  .about-block h3 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--accent);
+    margin-bottom: 12px;
+    letter-spacing: -0.01em;
+  }
+
+  .about-block p {
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.75;
+  }
+
+  .about-block p + p { margin-top: 10px; }
+
+  .about-block ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .about-block ul li {
+    font-size: 0.78rem;
+    color: var(--muted);
+    line-height: 1.65;
+    padding-left: 1.4em;
+    position: relative;
+  }
+
+  .about-block ul li::before {
+    content: '//';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 0.68rem;
+    top: 0.05em;
+  }
+
+  .about-block .hl  { color: var(--accent); }
+  .about-block .hl2 { color: var(--accent2); }
+
+  footer {
+    font-size: 0.7rem;
     color: var(--muted);
     text-align: center;
-    max-width: 440px;
-    line-height: 1.6;
+    padding-bottom: 16px;
+    line-height: 1.8;
   }
-  .note span { color: var(--accent); }
+
+  footer a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent); }
 </style>
 </head>
 <body>
 
 <header>
-  <h1>QR → SVG Generator</h1>
-  <h2>for 3D Printing and Engraving</h2>
-  <p class="subtitle">// native vector output · zero raster artifacts</p>
+  <p class="site-name">QR-SVG.com</p>
+  <h1>Generate QR Codes as Native SVG</h1>
+  <h2>for 3D Printing &amp; Laser Engraving</h2>
+  <p class="subtitle">// clean path geometry · zero raster artifacts · slicer-ready</p>
   <p class="subtitle"><a href="https://buymeacoffee.com/mi_ty" style="color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent);">Buy me a coffee!</a></p>
 </header>
 
@@ -303,12 +441,52 @@
   <span class="info-pill" id="size-info"></span>
 </div>
 
-<p class="note">
-  A QR Generator with SVG output that retains sharp lines and joins adjacent regions correctly.
-  Fixes problems I have had with every other online generator, hopefully you will find this tool useful.
-  All connected dark regions — including partial row overlaps — are traced as single
-  <span>&lt;path&gt;</span> polygons with no internal seams. Clean geometry for extrusion in any slicer or CAD tool.
-</p>
+<!-- Expanded body copy: ~400 words, targets key search phrases -->
+<section class="about" aria-label="About this QR code SVG generator">
+
+  <div class="about-block">
+    <h3>Why this generator is different</h3>
+    <p>
+      Most QR code tools — even ones that claim SVG output — produce a grid of individual squares:
+      one <span class="hl">&lt;rect&gt;</span> per dark module. That looks fine on screen, but causes real problems
+      in a slicer or CAD tool. Touching rectangles create invisible seams that confuse extruders, leave
+      hairline gaps under certain slicer settings, and cause double-pass burns in laser engravers.
+    </p>
+    <p>
+      This generator traces the entire QR boundary and merges all adjacent dark regions into
+      <span class="hl">single closed &lt;path&gt; polygons</span> with no internal seams. The output is topologically
+      clean geometry — one file, ready to extrude, emboss, or engrave without any post-processing.
+    </p>
+  </div>
+
+  <div class="about-block">
+    <h3>Common use cases</h3>
+    <ul>
+      <li><span class="hl2">3D-printed keychains &amp; tags</span> — embed a URL or contact card into a physical object. Use H error correction for small prints where fine detail may be lost.</li>
+      <li><span class="hl2">PrusaSlicer &amp; Bambu SVG embossing</span> — import the SVG as a modifier mesh. Clean merged paths extrude without gaps at any layer height.</li>
+      <li><span class="hl2">Laser engraving &amp; CNC routing</span> — no overlapping vectors means no double-pass burns. Works directly in LightBurn, Inkscape, and Illustrator without cleanup.</li>
+      <li><span class="hl2">Tinkercad &amp; Fusion 360</span> — import as an SVG sketch and extrude to any height. Merged paths import as a single body, not hundreds of separate faces.</li>
+      <li><span class="hl2">Resin casting &amp; signage</span> — high-contrast codes cast cleanly because the geometry is a single contiguous region with no internal voids.</li>
+    </ul>
+  </div>
+
+  <div class="about-block">
+    <h3>Choosing error correction</h3>
+    <p>Error correction determines how much of the code can be damaged and still scan. Higher correction means more redundancy and a denser code.</p>
+    <ul>
+      <li><span class="hl">L — 7%</span> · Best for screen display or high-quality flat prints. Smallest code size.</li>
+      <li><span class="hl">M — 15%</span> · Default. Good balance for most 3D prints and engravings.</li>
+      <li><span class="hl">Q — 25%</span> · Recommended for prints smaller than 30 mm or textured surfaces.</li>
+      <li><span class="hl">H — 30%</span> · Use for very small prints, rough materials, or when a logo occupies the center of the code.</li>
+    </ul>
+  </div>
+
+</section>
+
+<footer>
+  <p>All processing runs in your browser. No data is sent to any server.<br>
+  <a href="https://buymeacoffee.com/mi_ty">Buy me a coffee</a> if this saved you time.</p>
+</footer>
 
 <script>
 let currentSVG = '';
