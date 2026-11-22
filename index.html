@@ -3,71 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<!-- ═══════════════════════════════════════════════
-     SEO: Title — keyword-rich, no special chars
-     ═══════════════════════════════════════════════ -->
-<title>QR Code SVG Generator for 3D Printing &amp; Engraving | QR-SVG.com</title>
-
-<!-- ═══════════════════════════════════════════════
-     SEO: Meta description
-     ═══════════════════════════════════════════════ -->
-<meta name="description" content="Generate clean-path SVG QR codes for 3D printing and engraving. Adjacent modules are merged into single paths — no seams, no raster artifacts. Free &amp; instant.">
-
-<!-- ═══════════════════════════════════════════════
-     SEO: Canonical
-     ═══════════════════════════════════════════════ -->
+<title>QR Generator to SVG for 3D Printing</title>
 <link rel="canonical" href="https://qr-svg.com/">
-
-<!-- ═══════════════════════════════════════════════
-     SEO: Open Graph (for Reddit, Discord, social)
-     ═══════════════════════════════════════════════ -->
-<meta property="og:type"        content="website">
-<meta property="og:url"         content="https://qr-svg.com/">
-<meta property="og:title"       content="QR Code SVG Generator for 3D Printing &amp; Engraving | QR-SVG.com">
-<meta property="og:description" content="Generate clean-path SVG QR codes for 3D printing and laser engraving. No seams, no raster artifacts — free and instant.">
-<meta property="og:image"       content="https://qr-svg.com/og-preview.png">
-<meta property="og:image:width"  content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:site_name"   content="QR-SVG.com">
-
-<!-- ═══════════════════════════════════════════════
-     SEO: Twitter / X Card
-     ═══════════════════════════════════════════════ -->
-<meta name="twitter:card"        content="summary_large_image">
-<meta name="twitter:title"       content="QR Code SVG Generator for 3D Printing &amp; Engraving | QR-SVG.com">
-<meta name="twitter:description" content="Clean-path SVG QR codes. Adjacent modules merged into single polygons — no seams, ready for any slicer or CAD tool.">
-<meta name="twitter:image"       content="https://qr-svg.com/og-preview.png">
-
-<!-- ═══════════════════════════════════════════════
-     SEO: Structured Data — WebApplication schema
-     ═══════════════════════════════════════════════ -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "QR Code SVG Generator for 3D Printing & Engraving — QR-SVG.com",
-  "url": "https://qr-svg.com/",
-  "description": "Generate clean-path SVG QR codes for 3D printing and laser engraving. Adjacent modules are merged into single polygons with no internal seams — perfect for slicers and CAD tools.",
-  "applicationCategory": "UtilitiesApplication",
-  "operatingSystem": "Web",
-  "browserRequirements": "Any modern browser",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "USD"
-  },
-  "featureList": [
-    "Clean-path SVG output with no module seams",
-    "Transparent background support",
-    "Configurable error correction levels",
-    "Adjustable quiet zone",
-    "Custom module and background colors",
-    "One-click SVG download"
-  ]
-}
-</script>
-
+<meta name="description" content="Free QR code to SVG generator for 3D printing and engraving. Clean vector output with no internal seams, plus PNG, JPG and GIF export.">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Syne:wght@400;700;800&display=swap');
@@ -96,17 +34,7 @@
     gap: 32px;
   }
 
-  header { text-align: center; width: 100%; max-width: 520px; }
-
-  .site-name {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 0.78rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 10px;
-  }
+  header { text-align: center; }
 
   h1 {
     font-family: 'Syne', sans-serif;
@@ -306,87 +234,43 @@
     padding: 4px 12px;
   }
 
-  /* ── Expanded about section ── */
-  .about {
+  .export-section {
     width: 100%;
-    max-width: 520px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 14px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
   }
 
-  .about-block {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 24px 28px;
-  }
+  .export-section .field { margin-bottom: 0; }
 
-  .about-block h3 {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 1rem;
-    color: var(--accent);
-    margin-bottom: 12px;
-    letter-spacing: -0.01em;
-  }
-
-  .about-block p {
-    font-size: 0.8rem;
-    color: var(--muted);
-    line-height: 1.75;
-  }
-
-  .about-block p + p { margin-top: 10px; }
-
-  .about-block ul {
-    list-style: none;
-    padding: 0;
-    margin-top: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .about-block ul li {
-    font-size: 0.78rem;
-    color: var(--muted);
-    line-height: 1.65;
-    padding-left: 1.4em;
-    position: relative;
-  }
-
-  .about-block ul li::before {
-    content: '//';
-    position: absolute;
-    left: 0;
-    color: var(--accent);
+  .export-hint {
     font-size: 0.68rem;
-    top: 0.05em;
+    color: var(--muted);
+    line-height: 1.6;
+    white-space: pre-line;
   }
 
-  .about-block .hl  { color: var(--accent); }
-  .about-block .hl2 { color: var(--accent2); }
+  .dl-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+  .dl-btn:disabled:hover { opacity: 0.3; }
 
-  footer {
-    font-size: 0.7rem;
+  .note {
+    font-size: 0.72rem;
     color: var(--muted);
     text-align: center;
-    padding-bottom: 16px;
-    line-height: 1.8;
+    max-width: 440px;
+    line-height: 1.6;
   }
-
-  footer a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent); }
+  .note span { color: var(--accent); }
 </style>
 </head>
 <body>
 
 <header>
-  <p class="site-name">QR-SVG.com</p>
-  <h1>Generate QR Codes as Native SVG</h1>
-  <h2>for 3D Printing &amp; Laser Engraving</h2>
-  <p class="subtitle">// clean path geometry · zero raster artifacts · slicer-ready</p>
-  <p class="subtitle"><a href="https://buymeacoffee.com/mi_ty" style="color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent);">Buy me a coffee!</a></p>
+  <h1>QR → SVG Generator</h1>
+  <h2>for 3D Printing and Engraving</h2>
+  <p class="subtitle">// native vector output · zero raster artifacts</p>
 </header>
 
 <div class="card">
@@ -436,57 +320,45 @@
   <div id="svg-preview"></div>
   <div class="action-row">
     <button class="dl-btn dl-primary" onclick="downloadSVG()">↓ Download SVG</button>
-    <button class="dl-btn dl-secondary" onclick="copySVG()">Copy SVG Code</button>
+    <button class="dl-btn dl-secondary" id="svg-copy-btn" onclick="copySVG()">Copy SVG Code</button>
   </div>
+
+  <div class="export-section">
+    <span class="preview-label">Export as image</span>
+    <div class="row">
+      <div class="field">
+        <label for="img-format">Format</label>
+        <select id="img-format" onchange="updateExportUI()">
+          <option value="png">PNG (transparency)</option>
+          <option value="jpg">JPG</option>
+          <option value="gif">GIF</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="img-size">Size (px)</label>
+        <input type="number" id="img-size" value="1024" min="64" max="4096" step="64" oninput="updateExportUI()">
+      </div>
+    </div>
+    <div class="action-row">
+      <button class="dl-btn dl-primary" id="img-dl-btn" onclick="downloadImage()">↓ Download as PNG</button>
+      <button class="dl-btn dl-secondary" id="img-copy-btn" onclick="copyImage()">Copy as PNG</button>
+    </div>
+    <span class="export-hint" id="img-hint"></span>
+  </div>
+
   <span class="info-pill" id="size-info"></span>
 </div>
 
-<!-- Expanded body copy: ~400 words, targets key search phrases -->
-<section class="about" aria-label="About this QR code SVG generator">
+<p class="note">
+  A QR Generator with SVG output that retains sharp lines and joins adjacent regions correctly.
+  Fixes problems I have had with every other online generator, hopefully you will find this tool useful.
+  All connected dark regions — including partial row overlaps — are traced as single
+  <span>&lt;path&gt;</span> polygons with no internal seams. Clean geometry for extrusion in any slicer or CAD tool.
+</p>
 
-  <div class="about-block">
-    <h3>Why this generator is different</h3>
-    <p>
-      Most QR code tools — even ones that claim SVG output — produce a grid of individual squares:
-      one <span class="hl">&lt;rect&gt;</span> per dark module. That looks fine on screen, but causes real problems
-      in a slicer or CAD tool. Touching rectangles create invisible seams that confuse extruders, leave
-      hairline gaps under certain slicer settings, and cause double-pass burns in laser engravers.
-    </p>
-    <p>
-      This generator traces the entire QR boundary and merges all adjacent dark regions into
-      <span class="hl">single closed &lt;path&gt; polygons</span> with no internal seams. The output is topologically
-      clean geometry — one file, ready to extrude, emboss, or engrave without any post-processing.
-    </p>
-  </div>
-
-  <div class="about-block">
-    <h3>Common use cases</h3>
-    <ul>
-      <li><span class="hl2">3D-printed keychains &amp; tags</span> — embed a URL or contact card into a physical object. Use H error correction for small prints where fine detail may be lost.</li>
-      <li><span class="hl2">PrusaSlicer &amp; Bambu SVG embossing</span> — import the SVG as a modifier mesh. Clean merged paths extrude without gaps at any layer height.</li>
-      <li><span class="hl2">Laser engraving &amp; CNC routing</span> — no overlapping vectors means no double-pass burns. Works directly in LightBurn, Inkscape, and Illustrator without cleanup.</li>
-      <li><span class="hl2">Tinkercad &amp; Fusion 360</span> — import as an SVG sketch and extrude to any height. Merged paths import as a single body, not hundreds of separate faces.</li>
-      <li><span class="hl2">Resin casting &amp; signage</span> — high-contrast codes cast cleanly because the geometry is a single contiguous region with no internal voids.</li>
-    </ul>
-  </div>
-
-  <div class="about-block">
-    <h3>Choosing error correction</h3>
-    <p>Error correction determines how much of the code can be damaged and still scan. Higher correction means more redundancy and a denser code.</p>
-    <ul>
-      <li><span class="hl">L — 7%</span> · Best for screen display or high-quality flat prints. Smallest code size.</li>
-      <li><span class="hl">M — 15%</span> · Default. Good balance for most 3D prints and engravings.</li>
-      <li><span class="hl">Q — 25%</span> · Recommended for prints smaller than 30 mm or textured surfaces.</li>
-      <li><span class="hl">H — 30%</span> · Use for very small prints, rough materials, or when a logo occupies the center of the code.</li>
-    </ul>
-  </div>
-
-</section>
-
-<footer>
-  <p>All processing runs in your browser. No data is sent to any server.<br>
-  <a href="https://buymeacoffee.com/mi_ty">Buy me a coffee</a> if this saved you time.</p>
-</footer>
+<p class="note">
+  Found this useful? <a href="https://buymeacoffee.com/mi_ty" style="color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent);">Buy me a coffee!</a>
+</p>
 
 <script>
 let currentSVG = '';
@@ -622,6 +494,14 @@ function generate() {
 
     document.getElementById('svg-preview').innerHTML = currentSVG;
 
+    // Keep the module grid so raster exports are drawn from the exact same data.
+    const grid = new Uint8Array(n * n);
+    for (let r = 0; r < n; r++) {
+      for (let c = 0; c < n; c++) grid[r * n + c] = qr.isDark(r, c) ? 1 : 0;
+    }
+    lastModel = { n, quiet, total, grid, darkColor, lightColor };
+    updateExportUI();
+
     const darkCount = Array.from({length: n}, (_, r) =>
       Array.from({length: n}, (_, c) => qr.isDark(r, c) ? 1 : 0)
         .reduce((a,b) => a+b, 0)).reduce((a,b) => a+b, 0);
@@ -651,11 +531,231 @@ function downloadSVG() {
 function copySVG() {
   if (!currentSVG) return;
   navigator.clipboard.writeText(currentSVG).then(() => {
-    const btn = document.querySelector('.dl-secondary');
+    const btn = document.getElementById('svg-copy-btn');
     btn.textContent = '✓ Copied!';
     setTimeout(() => btn.textContent = 'Copy SVG Code', 2000);
   });
 }
+
+// ─── Raster export (PNG / transparent PNG / JPG / GIF) ──────────────────────
+//
+// Images are drawn straight from the module grid, not from the SVG, and every
+// module is scaled by a whole number of pixels. That keeps every edge exactly
+// on a pixel boundary: no blur, no hairline gaps between neighbouring modules.
+//
+let lastModel = null;
+const MAX_PX = 4096;
+
+const FORMATS = {
+  'png': { label: 'PNG', file: 'qrcode.png', copy: true  },
+  'jpg': { label: 'JPG', file: 'qrcode.jpg', copy: false },
+  'gif': { label: 'GIF', file: 'qrcode.gif', copy: false }
+};
+
+function isTransparent() {
+  return document.getElementById('transparent-bg').checked;
+}
+
+function hexToRgb(hex) {
+  const v = parseInt(hex.slice(1), 16);
+  return [(v >> 16) & 255, (v >> 8) & 255, v & 255];
+}
+
+function exportGeometry() {
+  let px = parseInt(document.getElementById('img-size').value, 10);
+  if (!px || px < 1) px = 1024;
+  px = Math.min(MAX_PX, px);
+  let scale = Math.max(1, Math.round(px / lastModel.total));
+  while (scale > 1 && lastModel.total * scale > MAX_PX) scale--;
+  return { scale, size: lastModel.total * scale };
+}
+
+function updateExportUI() {
+  if (!lastModel) return;
+  const fmt = FORMATS[document.getElementById('img-format').value];
+  const { scale, size } = exportGeometry();
+
+  document.getElementById('img-dl-btn').textContent = `↓ Download as ${fmt.label}`;
+  const copyBtn = document.getElementById('img-copy-btn');
+  copyBtn.textContent = `Copy as ${fmt.label}`;
+  copyBtn.disabled = !fmt.copy;
+
+  let hint = `${size}×${size} px · ${scale}px per module (whole-number scaling keeps edges sharp)`;
+  if (!fmt.copy) hint += '\nBrowsers can only copy PNG images to the clipboard, so copying is available for the PNG formats.';
+  const fmtKey = document.getElementById('img-format').value;
+  if (fmtKey === 'png') {
+    hint += isTransparent()
+      ? '\nTransparent Background is ticked, so this PNG has no background.'
+      : '\nTick Transparent Background above to get a PNG with no background.';
+  } else if (isTransparent()) {
+    hint += `\n${fmt.label} is exported with the background colour (no transparency).`;
+  }
+  if (fmtKey === 'jpg') {
+    hint += '\nJPG is lossy and can add faint noise around edges. PNG or SVG is better for engraving and printing.';
+  }
+  document.getElementById('img-hint').textContent = hint;
+}
+
+function renderCanvas(withBackground) {
+  const m = lastModel;
+  const { scale, size } = exportGeometry();
+  const canvas = document.createElement('canvas');
+  canvas.width = canvas.height = size;
+  const ctx = canvas.getContext('2d');
+
+  if (withBackground) {
+    ctx.fillStyle = m.lightColor;
+    ctx.fillRect(0, 0, size, size);
+  }
+  ctx.fillStyle = m.darkColor;
+  for (let r = 0; r < m.n; r++) {
+    let c = 0;
+    while (c < m.n) {
+      if (m.grid[r * m.n + c]) {
+        const start = c;
+        while (c < m.n && m.grid[r * m.n + c]) c++;
+        ctx.fillRect((start + m.quiet) * scale, (r + m.quiet) * scale, (c - start) * scale, scale);
+      } else {
+        c++;
+      }
+    }
+  }
+  return canvas;
+}
+
+function canvasToBlob(canvas, type, quality) {
+  return new Promise((resolve, reject) =>
+    canvas.toBlob(b => b ? resolve(b) : reject(new Error('Could not create image')), type, quality));
+}
+
+// <gif-encoder>
+// Minimal GIF89a writer for a 2-colour image (palette[0] = background,
+// palette[1] = modules). Variable-width LZW, 12-bit max with table resets.
+function lzwEncode(indices, minCode) {
+  const clear = 1 << minCode, eoi = clear + 1;
+  let next = eoi + 1, size = minCode + 1;
+  const table = new Int32Array(4096 * 256); // 0 = empty
+  const bytes = [];
+  let cur = 0, shift = 0;
+  const emit = code => {
+    cur |= code << shift;
+    shift += size;
+    while (shift >= 8) { bytes.push(cur & 255); cur >>>= 8; shift -= 8; }
+  };
+  emit(clear);
+  let prefix = indices[0];
+  for (let i = 1; i < indices.length; i++) {
+    const k = indices[i];
+    const key = (prefix << 8) | k;
+    const hit = table[key];
+    if (hit) { prefix = hit; continue; }
+    emit(prefix);
+    if (next === 4096) {
+      emit(clear);
+      table.fill(0);
+      next = eoi + 1;
+      size = minCode + 1;
+    } else {
+      if (next >= (1 << size)) size++;
+      table[key] = next++;
+    }
+    prefix = k;
+  }
+  emit(prefix);
+  emit(eoi);
+  if (shift > 0) bytes.push(cur & 255);
+  return bytes;
+}
+
+function encodeGIF(indices, width, height, palette) {
+  const out = [];
+  const w16 = v => out.push(v & 255, (v >> 8) & 255);
+  out.push(0x47, 0x49, 0x46, 0x38, 0x39, 0x61);   // "GIF89a"
+  w16(width); w16(height);
+  out.push(0x80, 0, 0);                            // global palette, 2 colours
+  for (const [r, g, b] of palette) out.push(r, g, b);
+  out.push(0x2C); w16(0); w16(0); w16(width); w16(height); out.push(0);
+  out.push(2);                                     // LZW minimum code size
+  const data = lzwEncode(indices, 2);
+  for (let i = 0; i < data.length; i += 255) {
+    const len = Math.min(255, data.length - i);
+    out.push(len);
+    for (let j = 0; j < len; j++) out.push(data[i + j]);
+  }
+  out.push(0, 0x3B);
+  return new Uint8Array(out);
+}
+// </gif-encoder>
+
+function buildGifBlob() {
+  const m = lastModel;
+  const { scale, size } = exportGeometry();
+  const indices = new Uint8Array(size * size);
+  const line = new Uint8Array(size);
+  for (let r = 0; r < m.total; r++) {
+    line.fill(0);
+    const gr = r - m.quiet;
+    if (gr >= 0 && gr < m.n) {
+      for (let c = 0; c < m.n; c++) {
+        if (m.grid[gr * m.n + c]) line.fill(1, (c + m.quiet) * scale, (c + m.quiet + 1) * scale);
+      }
+    }
+    for (let k = 0; k < scale; k++) indices.set(line, (r * scale + k) * size);
+  }
+  const bytes = encodeGIF(indices, size, size, [hexToRgb(m.lightColor), hexToRgb(m.darkColor)]);
+  return new Blob([bytes], { type: 'image/gif' });
+}
+
+async function buildImageBlob(key) {
+  if (key === 'png') return canvasToBlob(renderCanvas(!isTransparent()), 'image/png');
+  if (key === 'jpg') return canvasToBlob(renderCanvas(true), 'image/jpeg', 0.98);
+  if (key === 'gif') return buildGifBlob();
+  throw new Error('Unknown format');
+}
+
+function flashButton(btn, text) {
+  const original = btn.textContent;
+  btn.textContent = text;
+  setTimeout(() => { btn.textContent = original; }, 2000);
+}
+
+async function downloadImage() {
+  if (!lastModel) return;
+  clearError();
+  const key = document.getElementById('img-format').value;
+  try {
+    const blob = await buildImageBlob(key);
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = (key === 'png' && isTransparent()) ? 'qrcode-transparent.png' : FORMATS[key].file;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  } catch (e) {
+    showError('Could not create the image: ' + e.message);
+    console.error(e);
+  }
+}
+
+async function copyImage() {
+  if (!lastModel) return;
+  clearError();
+  const key = document.getElementById('img-format').value;
+  if (!FORMATS[key].copy) return;
+  const btn = document.getElementById('img-copy-btn');
+  try {
+    if (!navigator.clipboard || typeof ClipboardItem === 'undefined') {
+      throw new Error('this browser cannot copy images to the clipboard');
+    }
+    // Passing a promise keeps Safari happy: the write starts inside the click.
+    await navigator.clipboard.write([new ClipboardItem({ 'image/png': buildImageBlob(key) })]);
+    flashButton(btn, '✓ Copied!');
+  } catch (e) {
+    showError('Could not copy the image: ' + e.message);
+    console.error(e);
+  }
+}
+// ─────────────────────────────────────────────────────────────────────────────
 
 document.getElementById('qr-text').addEventListener('keydown', e => {
   if (e.key === 'Enter') generate();
